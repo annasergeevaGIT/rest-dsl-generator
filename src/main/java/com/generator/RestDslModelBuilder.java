@@ -10,19 +10,22 @@ public class RestDslModelBuilder extends com.generator.RestDslBaseListener {
 
     @Override
     public void enterService(com.generator.RestDslParser.ServiceContext ctx) {
-        String name = ctx.IDENTIFIER().getText();
-        service = new Service(name);
+        service = new Service(ctx.IDENTIFIER().getText());
     }
 
     @Override
     public void enterEndpoint(com.generator.RestDslParser.EndpointContext ctx) {
 
         String method = ctx.METHOD().getText();
-        String path = "/" + ctx.path().IDENTIFIER().getText();
+        String path = ctx.path().getText();
+
+        String request = null;
+        if (ctx.request() != null) {
+            request = ctx.request().IDENTIFIER().getText();
+        }
+
         String response = ctx.IDENTIFIER().getText();
 
-        Endpoint endpoint = new Endpoint(method, path, response);
-
-        service.addEndpoint(endpoint);
+        service.addEndpoint(new Endpoint(method, path, request, response));
     }
 }

@@ -4,11 +4,26 @@ grammar RestDsl;
 package com.generator;
 }
 
-service : 'service' IDENTIFIER '{' endpoint* '}' ;
+service
+    : 'service' IDENTIFIER '{' endpoint* '}'
+    ;
 
-endpoint : 'endpoint' METHOD path '->' IDENTIFIER ;
+endpoint
+    : 'endpoint' METHOD path request? '->' IDENTIFIER
+    ;
 
-path : '/' IDENTIFIER ;
+request
+    : '(' IDENTIFIER ')'
+    ;
+
+path
+    : '/' segment ('/' segment)*
+    ;
+
+segment
+    : IDENTIFIER
+    | '{' IDENTIFIER '}'
+    ;
 
 METHOD : 'GET' | 'POST' | 'PUT' | 'DELETE' ;
 

@@ -3,11 +3,13 @@ package com.generator;
 public class Endpoint {
     private final String method;
     private final String path;
+    private final String request;
     private final String response;
 
-    public Endpoint(String method, String path, String response) {
+    public Endpoint(String method, String path, String request, String response) {
         this.method = method;
         this.path = path;
+        this.request = request;
         this.response = response;
     }
 
@@ -18,6 +20,7 @@ public class Endpoint {
     public String getPath() {
         return path;
     }
+    public String getRequest() { return request; }
 
     public String getResponse() {
         return response;
